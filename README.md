@@ -168,10 +168,14 @@ The training workflow is implemented across these files:
 To retrain from the source dataset, run:
 
 ```bash
+pip install -r requirements-dev.txt
+```
+
+```bash
 python3 src/components/data_ingestion.py
 ```
 
-This command reads the dataset, creates train/test splits, builds the preprocessing object, trains candidate models, selects the best model, and saves the updated artifacts.
+The first command installs training-only libraries such as CatBoost, XGBoost, Matplotlib, and Seaborn. The second command reads the dataset, creates train/test splits, builds the preprocessing object, trains candidate models, selects the best model, and saves the updated artifacts.
 
 ## Azure Deployment
 
@@ -190,7 +194,7 @@ parth-student-score-06110006
 The GitHub Actions workflow uses this secret:
 
 ```text
-AZURE_WEBAPP_PUBLISH_PROFILE
+AZURE_CREDENTIALS
 ```
 
 Every push to `main` builds and deploys the Flask app to Azure App Service.

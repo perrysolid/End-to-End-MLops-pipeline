@@ -32,8 +32,21 @@ jobs:
       - name: Compile Python files
         run: python -m compileall app.py src
 
+      - name: Install dependencies into deployment package
+        run: |
+          mkdir -p .python_packages/lib/site-packages
+          pip install --target=".python_packages/lib/site-packages" -r requirements.txt
+
       - name: Create deployment package
-        run: git archive --format=zip --output=release.zip HEAD
+        run: |
+          zip -r release.zip . \
+            -x ".git/*" \
+            -x "venv/*" \
+            -x ".venv/*" \
+            -x "**/__pycache__/*" \
+            -x "*.pyc" \
+            -x ".pytest_cache/*" \
+            -x "release.zip"
 
       - name: Upload deployment package
         uses: actions/upload-artifact@v4
@@ -70,7 +83,7 @@ jobs:
           az webapp config appsettings set \
             --resource-group "$AZURE_RESOURCE_GROUP" \
             --name "$AZURE_WEBAPP_NAME" \
-            --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true ENABLE_ORYX_BUILD=true PYTHONPATH=.
+            --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false ENABLE_ORYX_BUILD=false PYTHONPATH=.
 
       - name: Deploy to Azure App Service
         id: deploy-to-webapp

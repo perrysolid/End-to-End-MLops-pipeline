@@ -1,3 +1,4 @@
+import os
 import sys
 import pandas as pd
 from src.exception import CustomException
@@ -65,4 +66,3 @@ class CustomData:
 
         except Exception as e:
             raise CustomException(e, sys)
-

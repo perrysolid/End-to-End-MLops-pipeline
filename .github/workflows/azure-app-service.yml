@@ -94,7 +94,9 @@ jobs:
             --src-path release.zip \
             --type zip \
             --restart true \
-            --async true
+            --async true \
+            --clean true \
+            --track-status false
 
       - name: Verify deployed app
         run: |

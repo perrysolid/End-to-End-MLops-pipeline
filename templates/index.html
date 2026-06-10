@@ -5,8 +5,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   </head>
   <body>
-    <a href="https://github.com/utkarshg1/mlproject_regression" class="top-left-link" target="_blank">GitHub Repository Link</a>
-    <h1>Gemstone Price Prediction - Utkarsh Gaikwad</h1>
+    <a href="https://github.com/perrysolid/End-to-End-MLops-pipeline" class="top-left-link" target="_blank">GitHub Repository Link</a>
+    <h1>Gemstone Price Prediction - Parth Mishra</h1>
     <img src="{{url_for('static', filename='/Image/your_profile_pic.jpg')}}" alt="Your Profile Picture" class="profile">
     <div class="form-box">
     <form action="{{url_for('predict_datapoint')}}" method="POST">
@@ -14,32 +14,32 @@
             <label for="carat">Carat:</label>
             <input type="text" id="carat" name="carat" placeholder="Enter carat value (float)">
         </div>
-    
+
         <div class="form-group">
             <label for="depth">Depth:</label>
             <input type="text" id="depth" name="depth" placeholder="Enter depth value (float)">
         </div>
 
-        <div class="form-group">  
+        <div class="form-group">
             <label for="table">Table:</label>
             <input type="text" id="table" name="table" placeholder="Enter table value (float)">
         </div>
-        
+
         <div class="form-group">
             <label for="x">x:</label>
             <input type="text" id="x" name="x" placeholder="Enter x value (float)">
         </div>
-      
+
         <div class="form-group">
             <label for="y">y:</label>
             <input type="text" id="y" name="y" placeholder="Enter y value (float)">
         </div>
-      
+
         <div class="form-group">
             <label for="z">z:</label>
             <input type="text" id="z" name="z" placeholder="Enter z value (float)">
-        </div>         
-      
+        </div>
+
     <div class="form-group">
       <label for="cut">Cut:</label>
       <select id="cut" name="cut">
@@ -50,7 +50,7 @@
         <option value="Ideal">Ideal</option>
       </select>
     </div>
-      
+
     <div class="form-group">
       <label for="color">Color:</label>
       <select id="color" name="color">
@@ -63,7 +63,7 @@
         <option value="J">J</option>
       </select>
     </div>
-    
+
     <div class="form-group">
       <label for="clarity">Clarity:</label>
       <select id="clarity" name="clarity">
@@ -77,12 +77,12 @@
         <option value="IF">IF</option>
       </select>
     </div>
-    
+
     <div style="clear:both;"></div>
       <input type="submit" value="Submit">
     </form>
     </div>
-    <div>      
+    <div>
     <h2>
       Predicted Gemstone Price is : {{ results }}
     </h2>

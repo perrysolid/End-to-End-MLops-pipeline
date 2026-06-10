@@ -1,88 +1,105 @@
-# Gemstone Price Prediction - Utkarsh Gaikwad
+# Gemstone Price Prediction
 
-### Introduction About the Data :
+An end-to-end regression project for predicting gemstone prices using a Flask web application, trained model artifacts, and Azure App Service deployment through GitHub Actions.
 
-Please this project is of a student. Just wanted to appreciate for knowledge sharing 
+## Introduction About the Data
 
-**The dataset** The goal is to predict `price` of given diamond (Regression Analysis).
+The goal is to predict the `price` of a diamond/gemstone using regression analysis.
 
-There are 10 independent variables (including `id`):
+There are 10 independent variables, including `id`:
 
-* `id` : unique identifier of each diamond
-* `carat` : Carat (ct.) refers to the unique unit of weight measurement used exclusively to weigh gemstones and diamonds.
-* `cut` : Quality of Diamond Cut
-* `color` : Color of Diamond
-* `clarity` : Diamond clarity is a measure of the purity and rarity of the stone, graded by the visibility of these characteristics under 10-power magnification.
-* `depth` : The depth of diamond is its height (in millimeters) measured from the culet (bottom tip) to the table (flat, top surface)
-* `table` : A diamond's table is the facet which can be seen when the stone is viewed face up.
-* `x` : Diamond X dimension
-* `y` : Diamond Y dimension
-* `x` : Diamond Z dimension
+* `id`: Unique identifier of each diamond
+* `carat`: Unit of weight measurement used for gemstones and diamonds
+* `cut`: Quality of diamond cut
+* `color`: Diamond color grade
+* `clarity`: Diamond clarity grade
+* `depth`: Diamond height measured from culet to table
+* `table`: Width of the diamond's top facet
+* `x`: Diamond X dimension
+* `y`: Diamond Y dimension
+* `z`: Diamond Z dimension
 
 Target variable:
-* `price`: Price of the given Diamond.
 
-Dataset Source Link :
-[https://www.kaggle.com/competitions/playground-series-s3e8/data?select=train.csv](https://www.kaggle.com/competitions/playground-series-s3e8/data?select=train.csv)
+* `price`: Price of the given diamond
 
-### It is observed that the categorical variables 'cut', 'color' and 'clarity' are ordinal in nature
+Dataset source:
+[Kaggle Playground Series S3E8](https://www.kaggle.com/competitions/playground-series-s3e8/data?select=train.csv)
 
-### Check this link for details : [American Gem Society](https://www.americangemsociety.org/ags-diamond-grading-system/)
+The categorical variables `cut`, `color`, and `clarity` are ordinal in nature.
 
-# AWS Deployment Link :
+Reference:
+[American Gem Society diamond grading system](https://www.americangemsociety.org/ags-diamond-grading-system/)
 
-AWS Elastic Beanstalk link : [http://gemstonepriceutkarshgaikwad-env.eba-7zp3wapg.ap-south-1.elasticbeanstalk.com/](http://gemstonepriceutkarshgaikwad-env.eba-7zp3wapg.ap-south-1.elasticbeanstalk.com/)
+## Azure Deployment
 
-# Screenshot of UI
+This repository is configured for Azure App Service deployment using GitHub Actions.
+
+Workflow file:
+
+```text
+.github/workflows/main_gempriceprediction.yml
+```
+
+The workflow runs on every push to `main`, installs dependencies from `requirements.txt`, uploads the application artifact, and deploys it to Azure App Service.
+
+Before deployment, update these values if your Azure Web App uses a different name or secret:
+
+* Azure Web App name in the workflow: `gempriceprediction`
+* GitHub Actions secret used by the workflow: `AZURE_WEBAPP_PUBLISH_PROFILE`
+
+## Application Routes
+
+* `/`: Web UI for entering gemstone details and getting a price prediction
+* `/predictAPI`: API endpoint for JSON-based predictions
+
+## Screenshot of UI
 
 ![HomepageUI](./Screenshots/HomepageUI.jpg)
 
-# YouTube Video Link
+## Tutorial Reference
 
-Link for YouTube Video : Click the below thumbnail to open 
+Krish Naik Azure deployment tutorial:
+[Deployment of ML Application in Azure Cloud Using GitHub Actions](https://www.youtube.com/watch?v=SkzmbeYCtiU&list=PLZoTAELRMXVPS-dOaVbAux22vzqdgoGhG&index=12)
 
-[![https://youtu.be/Xvk5r0t_RQw](https://i.ytimg.com/vi/Xvk5r0t_RQw/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBbp5SouquUm3Y3t-NYfOYsg4N4oQ)](https://youtu.be/Xvk5r0t_RQw)
+## Approach for the Project
 
-# AWS API Link
+1. Data Ingestion:
+    * Read the dataset as a CSV file.
+    * Split the data into training and testing datasets.
+    * Save the generated data files.
 
-API Link : [http://gemstonepriceutkarshgaikwad-env.eba-7zp3wapg.ap-south-1.elasticbeanstalk.com/predictAPI](http://gemstonepriceutkarshgaikwad-env.eba-7zp3wapg.ap-south-1.elasticbeanstalk.com/predictAPI)
+2. Data Transformation:
+    * Create a `ColumnTransformer` preprocessing pipeline.
+    * Apply median imputation and standard scaling on numerical variables.
+    * Apply most-frequent imputation, ordinal encoding, and scaling on categorical variables.
+    * Save the preprocessor as a pickle file.
 
-# Postman Testing of API :
+3. Model Training:
+    * Train and evaluate base regression models.
+    * Use CatBoost, XGBoost, and KNN in the final modeling approach.
+    * Save the trained model as a pickle file.
 
-![API Prediction](./Screenshots/APIPrediction.jpg)
+4. Prediction Pipeline:
+    * Convert input data into a dataframe.
+    * Load the saved preprocessor and model artifacts.
+    * Return the final prediction.
 
-# Approach for the project 
+5. Flask App:
+    * Serve a web UI for entering gemstone attributes.
+    * Provide an API endpoint for prediction requests.
 
-1. Data Ingestion : 
-    * In Data Ingestion phase the data is first read as csv. 
-    * Then the data is split into training and testing and saved as csv file.
+## Notebooks
 
-2. Data Transformation : 
-    * In this phase a ColumnTransformer Pipeline is created.
-    * for Numeric Variables first SimpleImputer is applied with strategy median , then Standard Scaling is performed on numeric data.
-    * for Categorical Variables SimpleImputer is applied with most frequent strategy, then ordinal encoding performed , after this data is scaled with Standard Scaler.
-    * This preprocessor is saved as pickle file.
+Exploratory data analysis:
+[EDA Notebook](./notebook/1_EDA_Gemstone_price.ipynb)
 
-3. Model Training : 
-    * In this phase base model is tested . The best model found was catboost regressor.
-    * After this hyperparameter tuning is performed on catboost and knn model.
-    * A final VotingRegressor is created which will combine prediction of catboost, xgboost and knn models.
-    * This model is saved as pickle file.
+Model training:
+[Model Training Notebook](./notebook/2_Model_Training_Gemstone.ipynb)
 
-4. Prediction Pipeline : 
-    * This pipeline converts given data into dataframe and has various functions to load pickle files and predict the final results in python.
+Model interpretation:
+[LIME Interpretation](./notebook/3_Explainability_with_LIME.ipynb)
 
-5. Flask App creation : 
-    * Flask app is created with User Interface to predict the gemstone prices inside a Web Application.
+## License
 
-# Exploratory Data Analysis Notebook
-
-Link : [EDA Notebook](./notebook/1_EDA_Gemstone_price.ipynb)
-
-# Model Training Approach Notebook
-
-Link : [Model Training Notebook](./notebook/2_Model_Training_Gemstone.ipynb)
-
-# Model Interpretation with LIME 
-
-Link : [LIME Interpretation](./notebook/3_Explainability_with_LIME.ipynb)
+This project uses the Apache-2.0 license. See [LICENSE](./LICENSE).

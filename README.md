@@ -53,14 +53,9 @@ Before deployment, update these values if your Azure Web App uses a different na
 * `/`: Web UI for entering gemstone details and getting a price prediction
 * `/predictAPI`: API endpoint for JSON-based predictions
 
-## Screenshot of UI
+## Application Preview
 
 ![HomepageUI](./Screenshots/HomepageUI.jpg)
-
-## Tutorial Reference
-
-Krish Naik Azure deployment tutorial:
-[Deployment of ML Application in Azure Cloud Using GitHub Actions](https://www.youtube.com/watch?v=SkzmbeYCtiU&list=PLZoTAELRMXVPS-dOaVbAux22vzqdgoGhG&index=12)
 
 ## Approach for the Project
 

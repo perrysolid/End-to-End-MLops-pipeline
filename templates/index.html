@@ -5,11 +5,20 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   </head>
   <body>
-    <a href="https://github.com/perrysolid/End-to-End-MLops-pipeline" class="top-left-link" target="_blank">GitHub Repository Link</a>
-    <h1>Gemstone Price Prediction - Parth Mishra</h1>
-    <img src="{{url_for('static', filename='/Image/your_profile_pic.jpg')}}" alt="Your Profile Picture" class="profile">
-    <div class="form-box">
-    <form action="{{url_for('predict_datapoint')}}" method="POST">
+    <main class="app-shell">
+      <a href="https://github.com/perrysolid/End-to-End-MLops-pipeline" class="repo-link" target="_blank" rel="noreferrer">GitHub</a>
+
+      <section class="masthead">
+        <div class="identity">
+          <span class="eyebrow">Regression Workspace</span>
+          <h1>Gemstone Price Prediction</h1>
+          <p>Parth Mishra</p>
+        </div>
+        <img src="{{ url_for('static', filename='Image/profile.jpeg') }}" alt="Parth Mishra" class="profile">
+      </section>
+
+      <section class="form-box">
+        <form action="{{url_for('predict_datapoint')}}" method="POST">
         <div class="form-group">
             <label for="carat">Carat:</label>
             <input type="text" id="carat" name="carat" placeholder="Enter carat value (float)">
@@ -78,13 +87,15 @@
       </select>
     </div>
 
-    <div style="clear:both;"></div>
       <input type="submit" value="Submit">
     </form>
-    </div>
-    <div>
-    <h2>
-      Predicted Gemstone Price is : {{ results }}
-    </h2>
+      </section>
+
+      {% if results %}
+      <section class="result-panel">
+        <h2>Predicted Gemstone Price is : {{ results }}</h2>
+      </section>
+      {% endif %}
+    </main>
   </body>
 </html>

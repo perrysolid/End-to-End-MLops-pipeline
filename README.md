@@ -45,7 +45,7 @@ The workflow runs on every push to `main`, installs dependencies from `requireme
 
 Before deployment, update these values if your Azure Web App uses a different name or secret:
 
-* Azure Web App name in the workflow: `gempriceprediction`
+* Azure Web App name in the workflow: `parth-gemprice-06102336`
 * GitHub Actions secret used by the workflow: `AZURE_WEBAPP_PUBLISH_PROFILE`
 
 ## Application Routes

@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: gempriceprediction
-  PYTHON_VERSION: '3.10'
+  AZURE_WEBAPP_NAME: parth-gemprice-06102336
+  PYTHON_VERSION: '3.11'
 
 jobs:
   build:

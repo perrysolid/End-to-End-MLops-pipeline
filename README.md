@@ -16,6 +16,20 @@ This project uses a regression model to estimate `math_score` using the followin
 
 The application serves a simple form through Flask. After a user submits the form, the app loads the saved preprocessing pipeline and trained model from the `artifacts/` directory, transforms the input, and returns the predicted math score.
 
+## Live App
+
+Azure App Service URL:
+
+```text
+https://parth-student-score-06110006.azurewebsites.net
+```
+
+Prediction form:
+
+```text
+https://parth-student-score-06110006.azurewebsites.net/predictdata
+```
+
 ## Tech Stack
 
 - Python
@@ -60,7 +74,7 @@ The application serves a simple form through Flask. After a user submits the for
 |   |-- index.html
 |   `-- home.html
 `-- .github/workflows/
-    `-- main_studentssperformance3.yml
+    `-- azure-app-service.yml
 ```
 
 ## Machine Learning Flow
@@ -164,22 +178,28 @@ This command reads the dataset, creates train/test splits, builds the preprocess
 The repository includes a GitHub Actions workflow for Azure App Service deployment:
 
 ```text
-.github/workflows/main_studentssperformance3.yml
+.github/workflows/azure-app-service.yml
 ```
 
-Before deploying, update the workflow with your own Azure App Service details:
+This project is configured to deploy to:
 
-- `app-name`: your Azure App Service name
-- `publish-profile`: your GitHub secret containing the Azure publish profile
+```text
+parth-student-score-06110006
+```
 
-After those values are configured, every push to `main` can build and deploy the Flask app to Azure App Service.
+The GitHub Actions workflow uses this secret:
+
+```text
+AZURE_WEBAPP_PUBLISH_PROFILE
+```
+
+Every push to `main` builds and deploys the Flask app to Azure App Service.
 
 ## Important Notes
 
 - The app expects `artifacts/model.pkl` and `artifacts/preprocessor.pkl` to exist before prediction.
 - Keep large generated files and local virtual environments out of commits.
 - If you retrain the model, commit the updated artifacts only when you intentionally want the deployed app to use the new model.
-- The current workflow file still uses the original Azure app name and secret placeholder from the imported project, so it should be updated before deployment.
 
 ## Author
 

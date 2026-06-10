@@ -79,11 +79,11 @@ jobs:
             --resource-group "$AZURE_RESOURCE_GROUP" \
             --name "$AZURE_WEBAPP_NAME" \
             --linux-fx-version "PYTHON|$PYTHON_VERSION" \
-            --startup-file "gunicorn --bind=0.0.0.0 --timeout 600 app:app"
+            --startup-file "python -m gunicorn --bind=0.0.0.0 --timeout 600 app:app"
           az webapp config appsettings set \
             --resource-group "$AZURE_RESOURCE_GROUP" \
             --name "$AZURE_WEBAPP_NAME" \
-            --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false ENABLE_ORYX_BUILD=false PYTHONPATH=.
+            --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false ENABLE_ORYX_BUILD=false PYTHONPATH=/home/site/wwwroot/.python_packages/lib/site-packages:/home/site/wwwroot
 
       - name: Deploy to Azure App Service
         id: deploy-to-webapp
@@ -94,4 +94,11 @@ jobs:
             --src-path release.zip \
             --type zip \
             --restart true \
-            --timeout 1200
+            --async true
+
+      - name: Verify deployed app
+        run: |
+          sleep 210
+          curl --retry 12 --retry-all-errors --retry-delay 10 --max-time 30 \
+            --fail "https://${AZURE_WEBAPP_NAME}.azurewebsites.net/predictdata" \
+            --output /tmp/azure-healthcheck.html

@@ -63,6 +63,13 @@ jobs:
             --docker-registry-server-user "${{ github.actor }}" \
             --docker-registry-server-password "${{ secrets.GITHUB_TOKEN }}"
             
+      - name: Set Web App Port
+        run: |
+          az webapp config appsettings set \
+            --resource-group "$AZURE_RESOURCE_GROUP" \
+            --name "$AZURE_WEBAPP_NAME" \
+            --settings WEBSITES_PORT=5000
+            
       - name: Restart Azure App Service
         run: |
           az webapp restart \

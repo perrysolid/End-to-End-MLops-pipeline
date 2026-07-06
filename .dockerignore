@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+*.pyc
+.git/
+.github/
+notebook/
+.gitignore
+README.md
+catboost_info/
